@@ -2,6 +2,7 @@
 
 use Chumper\Datatable\Engines\CollectionEngine;
 use Chumper\Datatable\Engines\QueryEngine;
+use Illuminate\Support\Facades\Request;
 use Input;
 
 /**
@@ -41,7 +42,7 @@ class Datatable {
      */
     public function shouldHandle()
     {
-        $echo = Input::get('sEcho',null);
+        $echo = Request::get('sEcho',null);
         if(/*Request::ajax() && */!is_null($echo) && is_numeric($echo))
         {
             return true;

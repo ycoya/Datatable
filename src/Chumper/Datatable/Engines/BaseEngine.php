@@ -5,7 +5,7 @@ use Chumper\Datatable\Columns\DateColumn;
 use Chumper\Datatable\Columns\FunctionColumn;
 use Chumper\Datatable\Columns\TextColumn;
 use Illuminate\Support\Collection;
-use Illuminate\Support\Facades\Input;
+use Illuminate\Support\Facades\Request;
 use Illuminate\Support\Facades\Response;
 use Illuminate\Support\Facades\Config;
 
@@ -434,7 +434,7 @@ abstract class BaseEngine {
      */
     protected function handleiSortCol_0($value)
     {
-        if(Input::get('sSortDir_0') == 'desc')
+        if(Request::get('sSortDir_0') == 'desc')
             $direction[$value] = BaseEngine::ORDER_DESC;
         else
             $direction[$value] = BaseEngine::ORDER_ASC;
@@ -462,12 +462,12 @@ abstract class BaseEngine {
             }
         }
 
-        $iSortingCols = Input::get('iSortingCols');
+        $iSortingCols = Request::get('iSortingCols');
         $sortingCols[] = $value;
         for($i = 1; $i < $iSortingCols; $i++) {
-            $isc = Input::get('iSortCol_'.$i);
+            $isc = Request::get('iSortCol_'.$i);
             $sortingCols[] = $isc;
-            $direction[$isc] = Input::get('sSortDir_'.$i);
+            $direction[$isc] = Request::get('sSortDir_'.$i);
         }
 
         $allColumns = array_keys($this->columns->all());
@@ -501,7 +501,7 @@ abstract class BaseEngine {
     protected function handleInputs()
     {
         //Handle all inputs magically
-        foreach (Input::all() as $key => $input) {
+        foreach (Request::all() as $key => $input) {
 
             // handle single column search
             if ($this->isParameterForSingleColumnSearch($key))
